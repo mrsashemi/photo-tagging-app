@@ -1,6 +1,7 @@
-import { collection, doc, getDoc, getDocs, onSnapshot, query, setDoc } from "firebase/firestore";
+import { collection, doc, getDocs, query, setDoc } from "firebase/firestore";
+import { getDownloadURL, ref } from "firebase/storage";
 import { useEffect, useRef, useState } from "react";
-import { firestore } from "../utils/firebase";
+import { firestore, storage } from "../utils/firebase";
 
 class Highscore {
     constructor (name, score) {
@@ -29,6 +30,29 @@ export function TopBar(props) {
     const [win, setWin] = useState(false);
     const [finalScore, setFinalScore] = useState('0:00');
     const [leaderboard, setLeaderboard] = useState([]);
+    const [charURL, setCharURL] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    const counter = useRef(0);
+    const mewRef = ref(storage, 'mew-as-pikachu.png');
+    const gagaRef = ref(storage, 'gaga-as-samus.png');
+    const muralRef = ref(storage, 'peace-on-earth.png');
+    const beatlesRef = ref(storage, 'the-beatles.png');
+    const ygRef = ref(storage, 'yg-as-cowboy-bebop.png');
+    const charRefArray = [
+        [mewRef, "Mew Disguised as Pikachu"], 
+        [gagaRef, "Lady Gaga as Samus Aran"], 
+        [muralRef, "Peace on Earth Mural"], 
+        [ygRef, "YG as Cowboy Bebop"], 
+        [beatlesRef, "The Beatles in Tokyo"]
+    ];
+
+    const imageLoaded = () => {
+        counter.current += 1;
+        if (counter.current >= 5) {
+            setLoading(false);
+        }
+    };
 
     const uploadScore = async () => {
         const scoreData = doc(firestore, "leaderboard", name).withConverter(highscoreConverter);
@@ -47,7 +71,14 @@ export function TopBar(props) {
     }
 
     useEffect(() => {
+        let urlArray = []
         loadLeaderboard();
+        charRefArray.forEach((item) => {
+            getDownloadURL(item[0]).then((url) => {
+                urlArray.push([url, item[1]]);
+                setCharURL(() => [...urlArray]);
+            })
+        });
     }, [])
 
     const timeoutRef = useRef(null);
@@ -72,6 +103,7 @@ export function TopBar(props) {
     }, [seconds])
 
     useEffect(() => {
+        console.log(props.score)
         if (props.score === 5) {
             resetInterval();
             setWin(true);
@@ -83,31 +115,55 @@ export function TopBar(props) {
     return (
         <div id="topBar">
             <div className="gameHeader">
-                <h1>Wizards Robbing Japan</h1>
-                <h3>by Hasib Hashemi and Adeeb Djawad of Wizards Robbing Kids</h3>
-                <h2>Find all the Characters</h2>
-                <ul className="leaderboard">
-                    {leaderboard.map((leader) => {
-                        return <li key={`${leader.name}-${leader.score}`}>{leader.name}: {leader.score}</li>
-                    })}
-                </ul>
+                <div className="mainHeader">
+                    <h1>Wizards Robbing Japan</h1>
+                    <h3>by Hasib Hashemi and Adeeb Djawad of Wizards Robbing Kids</h3>
+                </div>
+                <div className="findCharHeader">
+                    <h2>Find all the Characters:</h2>
+                    <div className="charContainer">
+                        <div 
+                            className='charImgContainer' 
+                            style={{
+                                display: loading ? "block" : "none"
+                            }}
+                        >Loading...
+                        </div>
+                        {charURL.map((url, index) => {
+                            return (
+                                <div className="charImgContainer" style={{display: loading ? "none" : "flex"}}>
+                                    <img src={url[0]} className="charIMG" key={`${url[1]}-${index}`} alt={url[1]} onLoad={imageLoaded}></img>
+                                    <div className="charLabel">{url[1]}</div>
+                                </div>
+                            )
+                        })}
+                    </div>
+                </div>
+                <div className="leaderboard">
+                    <h3>Leaderboard:</h3>
+                    <ul className="highscoresList">
+                        {leaderboard.map((leader) => {
+                            return <li key={`${leader.name}-${leader.score}`}>{leader.name} - {leader.score}</li>
+                        })}      
+                    </ul>
+                </div>
             </div>
             <div className="gameTimer">
-                <div>{minute}:{seconds < 10 ? `0${seconds}` : seconds}</div>
+                <div className="time">{minute}:{seconds < 10 ? `0${seconds}` : seconds}</div>
                 {!win 
                   ? <div className="timerStart">
-                            <button onClick={startTimer}>Start Game</button>
+                            <button onClick={startTimer} className="startGame">Start Game</button>
                     </div>
-                  : <div>
+                  : <div className="submitScore">
                         <label>Enter Name:</label>
                         <input type='text' id="name" onChange={(e) => setName(() => e.target.value)} value={name}></input>
-                        <button onClick={uploadScore}>Submit Score</button>
+                        <button onClick={uploadScore }>Submit Score</button>
                     </div>
                 }
+                <div className="gameCount">
+                    <div>{props.score}/5</div>
+                </div>
                 
-            </div>
-            <div className="gameCount">
-                <div>{props.score}/5</div>
             </div>
         </div>
     );

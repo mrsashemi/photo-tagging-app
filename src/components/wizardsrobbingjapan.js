@@ -45,7 +45,7 @@ export function WizardsRobbingJapan(props) {
                 if (item === linesRef) setWrjLinesSRC(() => url);
             })
         });
-    }, [wrjRef, charRef, linesRef]);
+    }, []);
 
     //load the images before rendering
     const imageLoaded = () => {
@@ -119,15 +119,15 @@ export function WizardsRobbingJapan(props) {
                     onLoad={imageLoaded}
                 ></img>
             </div>
+            <PopUp
+                popUpDisplay={popUpDisplay}
+                left={left}
+                top={top}
+                xCoord={xCoord}
+                yCoord={yCoord}
+                setScore={props.setScore}
+            />
         </div>
-        <PopUp
-            popUpDisplay={popUpDisplay}
-            left={left}
-            top={top}
-            xCoord={xCoord}
-            yCoord={yCoord}
-            setScore={props.setScore}
-        />
     </React.Fragment>
     );
 }

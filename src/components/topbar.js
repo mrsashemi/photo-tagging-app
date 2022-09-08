@@ -56,7 +56,8 @@ export function TopBar(props) {
 
     const uploadScore = async () => {
         const scoreData = doc(firestore, "leaderboard", name).withConverter(highscoreConverter);
-        await setDoc(scoreData, new Highscore(name, finalScore))
+        await setDoc(scoreData, new Highscore(name, finalScore));
+        window.location.reload(false);
     }
 
     const loadLeaderboard = async () => {
@@ -131,9 +132,9 @@ export function TopBar(props) {
                         </div>
                         {charURL.map((url, index) => {
                             return (
-                                <div className="charImgContainer" style={{display: loading ? "none" : "flex"}}>
-                                    <img src={url[0]} className="charIMG" key={`${url[1]}-${index}`} alt={url[1]} onLoad={imageLoaded}></img>
-                                    <div className="charLabel">{url[1]}</div>
+                                <div className="charImgContainer" style={{display: loading ? "none" : "flex"}} key={`${url[1]}-${index}`}>
+                                    <img src={url[0]} className="charIMG" key={`${url[1]}-${url[0]}-${index}`} alt={url[1]} onLoad={imageLoaded}></img>
+                                    <div className="charLabel" key={`${url[0]}-${url[1]}-${index}`}>{url[1]}</div>
                                 </div>
                             )
                         })}
@@ -142,9 +143,9 @@ export function TopBar(props) {
                 <div className="leaderboard">
                     <h3>Leaderboard:</h3>
                     <ul className="highscoresList">
-                        {leaderboard.map((leader) => {
-                            return <li key={`${leader.name}-${leader.score}`}>{leader.name} - {leader.score}</li>
-                        })}      
+                        {leaderboard.map((leader, index) => {
+                            return <li key={`${leader.name}-${leader.score}-${index}`}>{leader.name} - {leader.score}</li>
+                        })} 
                     </ul>
                 </div>
             </div>
@@ -157,7 +158,7 @@ export function TopBar(props) {
                   : <div className="submitScore">
                         <label>Enter Name:</label>
                         <input type='text' id="name" onChange={(e) => setName(() => e.target.value)} value={name}></input>
-                        <button onClick={uploadScore }>Submit Score</button>
+                        <button onClick={uploadScore}>Submit Score</button>
                     </div>
                 }
                 <div className="gameCount">

@@ -43,7 +43,6 @@ export function PopUp(props) {
                             setPaddingOn(() => true);
                             setBackGroundClr(() => 'rgba(0, 128, 0, 0.5)');
                             props.setScore(score => score + 1);
-                            console.log(paddingOn);
                             e.target.style.display = 'none'
                         } else {
                             setBackGroundClr(() => 'rgba(255, 0, 0, 0.5)');

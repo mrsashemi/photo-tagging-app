@@ -5,14 +5,17 @@ import { WizardsRobbingJapan } from './components/wizardsrobbingjapan';
 
 function App() {
   const [score, setScore] = useState(0);
+  const [begin, setBegin] = useState(false);
 
   return (
     <div className="App">
       <TopBar
         score={score}
+        setBegin={setBegin}
       />
       <WizardsRobbingJapan
-        setScore={setScore} 
+        setScore={setScore}
+        begin={begin} 
       />
     </div>
   );

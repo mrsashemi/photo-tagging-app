@@ -57,25 +57,27 @@ export function WizardsRobbingJapan(props) {
 
     //find the coordinates on the image to display the pop-up menu and to record the character location
     const onMouseMove = (e) => {
-        //x,y coordinates within the target DIV
-        let rect = e.currentTarget.getBoundingClientRect();
-        let x = e.clientX - rect.left;
-        let y = e.clientY - rect.top;
-        
-        //find and set the coordinates dynamically relative to the height and width of the image
-        const width = imgRef.current.offsetWidth;
-        const height = imgRef.current.offsetHeight;
-        const relX = (x / width).toFixed(2);
-        const relY = (y / height).toFixed(2);
+        if (props.begin) {
+            //x,y coordinates within the target DIV
+            let rect = e.currentTarget.getBoundingClientRect();
+            let x = e.clientX - rect.left;
+            let y = e.clientY - rect.top;
+            
+            //find and set the coordinates dynamically relative to the height and width of the image
+            const width = imgRef.current.offsetWidth;
+            const height = imgRef.current.offsetHeight;
+            const relX = (x / width).toFixed(2);
+            const relY = (y / height).toFixed(2);
 
-        setX(() => relX);
-        setY(() => relY);
+            setX(() => relX);
+            setY(() => relY);
 
-        //populate the popup menu
-        setLocation(() => location ? false : true);
-        setPopUpDisplay(() => location ? 'block' : 'none');
-        setLeft(() => location ? x : 0);
-        setTop(() => location ? y : 0);
+            //populate the popup menu
+            setLocation(() => location ? false : true);
+            setPopUpDisplay(() => location ? 'block' : 'none');
+            setLeft(() => location ? x : 0);
+            setTop(() => location ? y : 0);
+        }
     };
 
     return (

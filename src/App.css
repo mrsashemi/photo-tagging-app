@@ -1,0 +1,148 @@
+:root {
+  box-sizing: border-box;
+}
+
+.App {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+#topBar {
+  position: fixed;
+  height: 7.5rem;
+  width: 100%;
+  background-color: white;
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  /* From https://css.glass */
+  background: linear-gradient(
+    90deg,
+    rgba(255, 0, 0, 0.1) 0%,
+    rgba(255, 154, 0, 0.1) 10%,
+    rgba(208, 222, 33, 0.1) 20%,
+    rgba(79, 220, 74, 0.1) 30%,
+    rgba(63, 218, 216, 0.1) 40%,
+    rgba(47, 201, 226, 0.1) 50%,
+    rgba(28, 127, 238, 0.1) 60%,
+    rgba(95, 21, 242, 0.1) 70%,
+    rgba(186, 12, 248, 0.1) 80%,
+    rgba(251, 7, 217, 0.1) 90%,
+    rgba(255, 0, 0, 0.1) 100%
+  );
+  box-shadow: 0 0.15rem 1rem rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(8.5px);
+  -webkit-backdrop-filter: blur(8.5px);
+}
+
+.gameHeader {
+  display: flex;
+  flex-direction: column;
+}
+
+.gameTimer {
+  display: flex;
+  flex-direction: column;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+  padding: 0;
+}
+
+.backgroundImg {
+  position: relative;
+  z-index: 4;
+  top: 7.5rem;
+  display: block;
+  width: 100%;
+  height: fit-content;
+  background-repeat: no-repeat;
+  background-size: contain;
+  transform: translateZ(0);
+  will-change: transform;
+  -webkit-transform: translateZ(0);
+  transform-style:flat;
+  backface-visibility: hidden;
+}
+
+#wrjContainer {
+  position: relative;
+  z-index: 5;
+  width: fit-content;
+  height: fit-content;
+  /* From https://css.glass */
+  background: linear-gradient(0deg, 
+    rgba(230,179,138,0.2) 0%, 
+    rgba(255,248,174,0.2) 100%
+  );
+  box-shadow: 0 0.15rem 1rem rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+}
+
+.imgLevel {
+  width: 100%;
+  height: auto;
+  transition: all .5s;
+  cursor: crosshair;
+}
+
+#wizardsRobbingJapan {
+  position: relative;
+  z-index: 9;
+  opacity: 0.25;
+}
+
+#wrjLines {
+  position: absolute;
+  z-index: 14;
+  top: 0;
+  left: 0;
+  opacity: 0.5;
+}
+
+#wrjCharacters {
+  position: absolute;
+  z-index: 15;
+  top: 0;
+  left: 0;
+  opacity: 1;
+}
+
+#popUp {
+  position: absolute;
+  height: fit-content;
+  width: fit-content;
+  background-color: white;
+  z-index: 20;
+}
+
+.characterList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+li:hover {
+  background-color: aqua;
+  cursor: pointer;
+}
+
+#successOrFailPopUp {
+  height: fit-content;
+  width: fit-content;
+  position: fixed;
+  color: white;
+  top: 7.5rem;
+  left: 40%;
+  z-index: 30;
+  /* From https://css.glass */
+  box-shadow: 0 0.15rem 1rem rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(4.5px);
+  -webkit-backdrop-filter: blur(4.5px);
+  border-radius: var(--apps-border-radius);
+}

@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/photo-tagging-app/static/css/main.70c9a8fd.css",
+    "main.js": "/photo-tagging-app/static/js/main.8699fb7d.js",
+    "static/js/787.6eec3de1.chunk.js": "/photo-tagging-app/static/js/787.6eec3de1.chunk.js",
+    "static/media/VT323-Regular.ttf": "/photo-tagging-app/static/media/VT323-Regular.2bc43ad8eb2f60b39f27.ttf",
+    "index.html": "/photo-tagging-app/index.html",
+    "main.70c9a8fd.css.map": "/photo-tagging-app/static/css/main.70c9a8fd.css.map",
+    "main.8699fb7d.js.map": "/photo-tagging-app/static/js/main.8699fb7d.js.map",
+    "787.6eec3de1.chunk.js.map": "/photo-tagging-app/static/js/787.6eec3de1.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.70c9a8fd.css",
+    "static/js/main.8699fb7d.js"
+  ]
+}
